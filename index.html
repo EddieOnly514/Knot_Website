@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knot | Split Rides. Save Money. Travel Smart.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4169E1; /* Royal Blue */
+            --primary-dark: #2c4ebf;
+            --accent: #00B4D8; /* Teal-ish Blue */
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light-gray: #f8fafc;
+            --white: #ffffff;
+            --success: #10b981;
+            --radius-lg: 24px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 10px 30px -10px rgba(65, 105, 225, 0.15);
+            --shadow-lg: 0 20px 40px -12px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .badge-blue { background: rgba(65, 105, 225, 0.1); color: var(--primary); }
+        .badge-white { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px rgba(65, 105, 225, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(65, 105, 225, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 140px;
+            padding-bottom: 100px;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-btns { display: flex; gap: 16px; }
+
+        /* CSS Phone Mockup */
+        .phone-frame {
+            width: 300px;
+            height: 600px;
+            background: var(--dark);
+            border-radius: 48px;
+            border: 8px solid #1e293b;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transform: rotate(-1deg);
+        }
+
+        .screen {
+            background: #f0f4ff;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 24px;
+            background: #1e293b;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 10;
+        }
+
+        /* Mockup UI Elements */
+        .app-header { margin-top: 24px; margin-bottom: 20px; }
+        .app-header h4 { font-size: 1.2rem; }
+        
+        .app-card {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+        }
+
+        .app-map {
+            flex: 1;
+            background: #e2e8f0;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .chat-bubble {
+            background: var(--primary);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            width: fit-content;
+        }
+
+        /* Problem Strip */
+        .problem-strip {
+            background: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s;
+        }
+
+        .problem-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        .problem-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+        .problem-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+        .problem-card p { color: var(--gray); font-size: 0.95rem; }
+
+        /* Features */
+        .feature-section { padding: 100px 0; }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 24px;
+            border-radius: var(--radius-md);
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-icon-box {
+            width: 48px;
+            height: 48px;
+            background: #eff6ff;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+        }
+
+        /* How It Works */
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .step { flex: 1; text-align: center; }
+        .step-num {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #e2e8f0;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .step h3 { margin-bottom: 10px; }
+
+        /* Tech Section */
+        .tech-section {
+            background: #0f172a;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-bg-gradient {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(65, 105, 225, 0.2) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Savings Calculator */
+        .savings-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 80px 0;
+            margin: 80px 0;
+            border-radius: 32px;
+        }
+
+        .calc-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .calc-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            min-width: 280px;
+        }
+
+        .price-large { font-size: 3rem; font-weight: 800; color: var(--dark); }
+        .price-small { font-size: 3rem; font-weight: 800; color: var(--primary); }
+        .price-label { color: var(--gray); font-size: 0.9rem; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+        .arrow-right { font-size: 2rem; color: var(--primary); }
+
+        /* Airports */
+        .airport-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            text-align: center;
+        }
+        .airport-tag {
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .testimonial-card {
+            background: var(--light-gray);
+            padding: 32px;
+            border-radius: 20px;
+        }
+        .stars { color: #fbbf24; margin-bottom: 16px; }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 80px 0 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 60px;
+            margin-bottom: 40px;
+        }
+        .footer a { color: #94a3b8; text-decoration: none; display: block; margin-bottom: 12px; }
+        .footer a:hover { color: white; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-btns { justify-content: center; }
+            .problem-grid, .feature-grid, .steps-container, .calc-container, .airport-grid, .testimonials-grid, .footer-grid {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+            }
+            .calc-container { gap: 20px; }
+            .arrow-right { transform: rotate(90deg); }
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon"></div> Knot.
+            </div>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Features</a>
+                <a href="#airports">Airports</a>
+                <a href="#safety">Safety</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+            <a href="#download" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Download App</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="fade-up">
+                    <span class="badge badge-blue">New: Airport Arrival Mode</span>
+                    <h1>Split $100 airport rides in <span class="gradient-text">seconds.</span></h1>
+                    <p>Knot matches travelers heading to the same destination, helping you split Uber/Lyft costs by up to 70% with real-time matching.</p>
+                    <div class="hero-btns">
+                        <a href="#" class="btn btn-primary">Download App</a>
+                        <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+                    </div>
+                </div>
+                
+                <div class="fade-up">
+                    <div class="phone-frame">
+                        <div class="notch"></div>
+                        <div class="screen">
+                            <div class="app-header">
+                                <div style="font-size: 0.8rem; color: var(--gray);">Current Location</div>
+                                <h4>LAX Terminal 4</h4>
+                            </div>
+                            
+                            <div class="app-map">
+                                <div class="map-dot" style="top: 40%; left: 50%;"></div>
+                                <div class="map-dot" style="top: 45%; left: 60%; background: var(--accent);"></div>
+                                <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: white; padding: 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                    Match found! Heading to Irvine via I-405.
+                                </div>
+                            </div>
+
+                            <div class="app-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%;"></div>
+                                        <div>
+                                            <div style="font-weight: 700; font-size: 0.9rem;">Alex M.</div>
+                                            <div style="font-size: 0.7rem; color: var(--success);">Verified Student</div>
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary);">98% Match</span>
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--gray);">Going to: UCI Graduate Housing</div>
+                                <div class="chat-bubble">Hey! Want to split an XL?</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem-strip">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-card fade-up">
+                    <span class="problem-icon">💸</span>
+                    <h3>The Problem</h3>
+                    <p>Solo travelers routinely pay $50–$100 for airport rides, even when 10 other people are going to the exact same neighborhood.</p>
+                </div>
+                <div class="problem-card fade-up">
+                    <span class="problem-icon">🧩</span>
+                    <h3>The Friction</h3>
+                    <p>It’s hard to coordinate with strangers at baggage claim. Timing rarely aligns, and safety concerns block natural cost-sharing.</p>
+                </div>
+                <div class="problem-card fade-up">
+                    <span class="problem-icon">🚀</span>
+                    <h3>The Opportunity</h3>
+                    <p>With Knot's real-time GPS data and scheduled airport arrivals, finding a trusted ride-buddy becomes effortless.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="savings-section fade-up">
+            <div class="section-header">
+                <h2>Do the math.</h2>
+                <p>Why pay for empty seats?</p>
+            </div>
+            <div class="calc-container">
+                <div class="calc-card">
+                    <span class="price-label">UberXL Solo</span>
+                    <div class="price-large">$100</div>
+                    <span style="color: var(--gray); font-size: 0.8rem;">LAX → Irvine</span>
+                </div>
+                <div class="arrow-right">➝</div>
+                <div class="calc-card" style="border: 2px solid var(--primary);">
+                    <span class="price-label" style="color: var(--primary);">Split with Knot</span>
+                    <div class="price-small">$25</div>
+                    <span style="color: var(--gray); font-size: 0.8rem;">Per person (4 riders)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="feature-section">
+        <div class="container">
+            <div class="section-header fade-up">
+                <span class="badge badge-blue">Simple & Smart</span>
+                <h2>How Knot Works</h2>
+            </div>
+            <div class="steps-container">
+                <div class="step fade-up">
+                    <div class="step-num">1</div>
+                    <h3>Set Your Route</h3>
+                    <p style="color: var(--gray); padding: 0 20px;">Select your destination and whether you are leaving now or landing later.</p>
+                </div>
+                <div class="step fade-up">
+                    <div class="step-num">2</div>
+                    <h3>Get Matched</h3>
+                    <p style="color: var(--gray); padding: 0 20px;">Our algorithm pairs you with verified travelers going to your specific building or neighborhood.</p>
+                </div>
+                <div class="step fade-up">
+                    <div class="step-num">3</div>
+                    <h3>Chat & Ride</h3>
+                    <p style="color: var(--gray); padding: 0 20px;">Coordinate a meeting spot via secure chat. One person books the Uber/Lyft, everyone Venmos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" style="background: #f8fafc; padding: 100px 0;">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Engineered for Trust</h2>
+                <p>Everything you need to coordinate safely.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card fade-up">
+                    <div class="feature-icon-box">📍</div>
+                    <h4>Building-Level Precision</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-top: 8px;">PostGIS-powered queries allow us to match you with neighbors, not just zip codes.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon-box">✈️</div>
+                    <h4>Context-Aware Modes</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-top: 8px;">Optimized flows for both "I'm at the curb now" and "I land at 5:00 PM."</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon-box">🛡️</div>
+                    <h4>Safety First</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-top: 8px;">Identity verification badges and clear transparency. We never handle the payment.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon-box">💬</div>
+                    <h4>Real-Time Chat</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-top: 8px;">Coordinate instantly with quick pre-written templates to save time.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon-box">🎯</div>
+                    <h4>Smart Radius Control</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-top: 8px;">Customize your matching radius from 500 ft to 2 miles depending on urgency.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon-box">⚖️</div>
+                    <h4>No Booking Liability</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-top: 8px;">You always book through Uber/Lyft directly. Knot helps you find the squad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-section">
+        <div class="tech-bg-gradient"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <span class="badge badge-white">Under the Hood</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Powered by Spatial Intelligence</h2>
+            <p style="max-width: 600px; margin: 0 auto; color: #94a3b8; font-size: 1.1rem;">
+                Knot utilizes advanced PostGIS geographic querying to analyze directionality, arrival windows, and proximity in real-time, ensuring matches are actually efficient.
+            </p>
+        </div>
+    </section>
+
+    <section id="airports" style="padding: 100px 0;">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Supported Airports</h2>
+                <p>Live at major hubs. Expansion coming soon.</p>
+            </div>
+            <div class="airport-grid fade-up">
+                <div class="airport-tag">LAX</div>
+                <div class="airport-tag">JFK</div>
+                <div class="airport-tag">SFO</div>
+                <div class="airport-tag">ORD</div>
+                <div class="airport-tag">ATL</div>
+                <div class="airport-tag">DFW</div>
+                <div class="airport-tag">DEN</div>
+                <div class="airport-tag">SEA</div>
+                <div class="airport-tag">BOS</div>
+                <div class="airport-tag">MIA</div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc; padding: 100px 0;">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Travelers love Knot</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-up">
+                    <div class="stars">★★★★★</div>
+                    <p>"Matched with someone from my same terminal—saved $45 on my first trip back to campus."</p>
+                    <div style="margin-top: 16px; font-weight: 700; font-size: 0.9rem;">Sarah J., UCLA</div>
+                </div>
+                <div class="testimonial-card fade-up">
+                    <div class="stars">★★★★★</div>
+                    <p>"The airport arrival mode is unbeatable. I set it before I took off and had a match when I landed."</p>
+                    <div style="margin-top: 16px; font-weight: 700; font-size: 0.9rem;">David Chen, Consultant</div>
+                </div>
+                <div class="testimonial-card fade-up">
+                    <div class="stars">★★★★★</div>
+                    <p>"Feels like a safer, smarter way to travel. It removes the awkwardness of asking strangers."</p>
+                    <div style="margin-top: 16px; font-weight: 700; font-size: 0.9rem;">Emily R., NYU</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="safety" class="container" style="padding: 100px 0;">
+        <div class="section-header fade-up">
+            <h2>Common Questions</h2>
+        </div>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <details style="margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px;">
+                <summary style="font-weight: 600; cursor: pointer; list-style: none;">Does Knot book the Uber for me?</summary>
+                <p style="margin-top: 12px; color: var(--gray);">No. Knot matches you with other travelers. Once you meet, one person uses their own Uber/Lyft app to request the ride, and the others pay them back (usually via Venmo/CashApp).</p>
+            </details>
+            <details style="margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px;">
+                <summary style="font-weight: 600; cursor: pointer; list-style: none;">Is it safe?</summary>
+                <p style="margin-top: 12px; color: var(--gray);">Safety is our priority. We use identity verification and university email matching. However, you should always exercise the same caution you would when meeting anyone in public.</p>
+            </details>
+            <details style="margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px;">
+                <summary style="font-weight: 600; cursor: pointer; list-style: none;">Is my location data private?</summary>
+                <p style="margin-top: 12px; color: var(--gray);">Yes. Your exact location is never shown on a public map. We only use relative distance to find matches.</p>
+            </details>
+        </div>
+    </section>
+
+    <section id="download" style="text-align: center; padding: 100px 0; background: linear-gradient(180deg, white 0%, #eff6ff 100%);">
+        <div class="container fade-up">
+            <h2 style="font-size: 3rem; margin-bottom: 24px; font-weight: 800;">Start saving on every trip.</h2>
+            <p style="margin-bottom: 40px; color: var(--gray); font-size: 1.2rem;">Join the thousands of smart travelers switching to Knot.</p>
+            <div class="hero-btns" style="justify-content: center;">
+                <a href="#" class="btn btn-primary">Join the Waitlist</a>
+                <a href="#" class="btn btn-outline">Contact Support</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo" style="color: white; margin-bottom: 20px;">
+                        <div class="logo-icon" style="background: white; box-shadow: none;">
+                            <div style="position: absolute; width: 12px; height: 12px; border: 2px solid var(--primary); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        </div> 
+                        Knot.
+                    </div>
+                    <p style="color: #64748b; font-size: 0.9rem;">Connecting travelers, splitting costs.<br>The smarter way to ride.</p>
+                </div>
+                <div class="footer">
+                    <h4 style="color: white; margin-bottom: 20px;">Product</h4>
+                    <a href="#">Features</a>
+                    <a href="#">Safety</a>
+                    <a href="#">Airports</a>
+                </div>
+                <div class="footer">
+                    <h4 style="color: white; margin-bottom: 20px;">Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer">
+                    <h4 style="color: white; margin-bottom: 20px;">Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Disclaimer</a>
+                </div>
+            </div>
+            <div style="text-align: center; font-size: 0.8rem; color: #475569;">
+                © 2025 Knot Mobility Inc. Not affiliated with Uber or Lyft.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
